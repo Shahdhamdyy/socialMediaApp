@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { decodeToken } from "../common/security/security";
-import { get, createRevokeKey } from "../database/redis.service";
+import { redisService } from "../common/services/redis.service";
 import { UnauthorizedException } from "../common/exceptions/application.exception";
 
 interface AuthRequest extends Request {
@@ -28,12 +28,12 @@ export const auth = async (
 
         const data = decodeToken(token);
 
-        const revoked = await get(
-            createRevokeKey({
-                userId: data.id,
-                token,
-            })
-        );
+        const revokeKey = redisService.createRevokeKey({
+            userId: data.id,
+            token,
+        });
+
+        const revoked = await redisService.get(revokeKey);
 
         if (revoked) {
             throw new UnauthorizedException("Already logged out");

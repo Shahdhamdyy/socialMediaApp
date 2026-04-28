@@ -32,4 +32,15 @@ router.post(
     }
 );
 
+router.put(
+    "/verify-email",
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await AuthService.verifyEmail(req.body);
+            return successResponse({ res, message: "Email verified", status: 200, data });
+        } catch (err) {
+            next(err);
+        }
+    }
+)
 export default router;

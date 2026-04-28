@@ -1,7 +1,6 @@
 import { GenderEnum, ProviderEnum, RoleEnum } from "../enums";
 export interface IUser {
     _id: string;
-
     userName: string;
     firstName: string;
     lastName: string;
@@ -16,6 +15,7 @@ export interface IUser {
     confirmEmail: boolean;
     createdAt?: Date;
     updatedAt?: Date;
+    isDeleted?: Boolean
 
 
 }

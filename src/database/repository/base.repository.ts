@@ -1,7 +1,7 @@
 import { HydratedDocument, Model, PopulateOptions } from 'mongoose';
 import { IUser } from '../../common/interfaces'
 
-
+import { QueryOptions, QueryFilter, UpdateQuery } from 'mongoose';
 
 //TRawDocs means that the class is generic can work with any model not just the user model and it will be defined when we create an instance of the repository in our service, allowing us to have a reusable repository class that can be used with different models throughout our application.
 export class DatabaseRrepository<TRawDocs> {
@@ -18,7 +18,11 @@ export class DatabaseRrepository<TRawDocs> {
 
 
     //find one document that matches the filter criteria, with optional select and populate parameters to specify which fields to return and which related documents to populate. It returns a promise that resolves to a hydrated document of the specified type.
-    findOne(filter: Partial<TRawDocs>, select?: string | Record<string, 0 | 1>, populate?: PopulateOptions | PopulateOptions[]) {
+    findOne(
+        filter: Partial<TRawDocs>,
+        select?: string | Record<string, 0 | 1>,
+        populate?: PopulateOptions | PopulateOptions[]) {
+
         let docs = this.model.findOne(filter);
         if (select) {
             docs = docs.select(select);
@@ -28,5 +32,30 @@ export class DatabaseRrepository<TRawDocs> {
         }
         return docs;
     }
+
+    findOneAndUpdate(
+        filter: QueryFilter<TRawDocs>,
+        update: UpdateQuery<TRawDocs>,
+        select?: string | Record<string, 0 | 1 | Boolean>,
+        options?: QueryOptions,
+
+        populate?: PopulateOptions | PopulateOptions[]) {
+        let docs = this.model.findOneAndUpdate(filter, update, {
+            new: true,
+            ...options,
+            runValidators: true,
+
+        });
+        if (select) {
+            docs = docs.select(select);
+        }
+
+        if (populate) {
+            docs = docs.populate(populate);
+        }
+
+        return docs;
+    }
+
 
 }
