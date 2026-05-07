@@ -3,7 +3,7 @@ import AuthService from "./auth.service";
 import { successResponse } from "../../common/exceptions/success.responce";
 import { validation } from "../../middleware/validation.middleware";
 import { signupSchema, loginSchema } from "./auth.validation";
-
+import {auth} from '../../middleware/auth.middleware'
 const router = Router();
 router.post(
     "/login",
@@ -31,9 +31,13 @@ router.post(
         }
     }
 );
+router.get("/test",auth,async(req:Request,res:Response)=>{
+    res.json({message:"test"})
+    
+})
 
 router.put(
-    "/verify-email",
+    "/verify-email",auth,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data = await AuthService.verifyEmail(req.body);

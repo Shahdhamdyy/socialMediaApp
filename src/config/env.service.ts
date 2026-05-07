@@ -19,6 +19,15 @@ const BASE_URL = process.env.Base_URL as string;
 const REDIS_URI = process.env.REDIS_URI as string;
 const APP_EMAIL = process.env.APP_EMAIL as string;
 const APP_PASSWORD = process.env.APP_PASSWORD as string;
+
+const AWS_BUCKET_NAME = process.env.const as string
+
+const AWS_REGION = process.env.AWS_REGION as string;
+
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID as string
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY as string
+
+const AWS_EXPIRATION_TIME = process.env.AWS_EXPIRATION_TIME as string
 export const env = {
     mongoURL,
     mood,
@@ -32,7 +41,12 @@ export const env = {
     BASE_URL,
     REDIS_URI,
     APP_EMAIL,
-    APP_PASSWORD
+    APP_PASSWORD,
+    AWS_BUCKET_NAME,
+    AWS_REGION,
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY,
+    AWS_EXPIRATION_TIME
 
 
 

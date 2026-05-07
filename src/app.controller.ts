@@ -6,7 +6,8 @@ import { env } from "./config/env.service";
 import cors from "cors";
 import DBConnection from "./database/connection";
 import { redisService } from "./common/services/redis.service";
-import userModel from "./database/model/user.model";
+// import userModel from "./database/model/user.model";
+import {userRouter} from "./modules"
 export const bootstrap = async () => {
   const app: Express = express();
   app.use(cors(), express.json());
@@ -24,10 +25,10 @@ export const bootstrap = async () => {
   // })
   // await user.save()
 
-  let newUser = await userModel.findOne({
-    email: "a0Gdjmas2q1@example.com",
-    admin: true
-  })
+  // let newUser = await userModel.findOne({
+  //   email: "a0Gdjmas2q1@example.com",
+  //   admin: true
+  // })
   // await user?.updateOne({
   //   firstName: "samyyy",
   //   phone: "1234567890"
@@ -47,6 +48,7 @@ export const bootstrap = async () => {
 
   //------------------------------------
   app.use("/auth", authRouter);
+  app.use("/user", userRouter)
   app.use(globalErrorHnadler);
 
   app.listen(env.port, () => {

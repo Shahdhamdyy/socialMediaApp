@@ -1,11 +1,12 @@
 import { env } from "../../../config/env.service";
 import bcrypt from "bcrypt";
-export const generateHash = async ({ plainText, salt = env.salt }: {
-    plainText: string,
-    salt?: string
+export const generateHash = async ({
+    plainText,
+}: {
+    plainText: string;
 }): Promise<string> => {
-    return await bcrypt.hash(plainText, Number(salt));
-}
+    return await bcrypt.hash(plainText, 10);
+};
 
 export const compareHash = async ({ plainText, cypherText }: {
     plainText: string,

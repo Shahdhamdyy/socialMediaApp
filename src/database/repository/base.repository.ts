@@ -56,6 +56,21 @@ export class DatabaseRrepository<TRawDocs> {
 
         return docs;
     }
+    findById(
+        id: string,
+        select?: string | Record<string, 0 | 1>,
+        populate?: PopulateOptions | PopulateOptions[]
+    ) {
+        let docs = this.model.findById(id);
+        if (select) {
+            docs = docs.select(select);
+        }
+        if (populate) {
+            docs = docs.populate(populate);
+        }
+        return docs
+
+    }
 
 
 }

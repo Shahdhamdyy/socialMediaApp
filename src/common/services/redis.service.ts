@@ -58,7 +58,7 @@ export class RedisService {
     get = async (key: string): Promise<string | null> => {
         let data = await this.client.get(key)
         if (!data) {
-            throw new NotFoundException("Invalid token")
+            return null
         }
         try {
             data = JSON.parse(data)
